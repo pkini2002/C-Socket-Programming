@@ -24,6 +24,7 @@ TCP does flow control & requires 3 packets to setup a socket communication befor
 | sys/socket.h | This library contains core socket programming interfaces like `socket()`, `bind()`, `accept()`, `listen()`, Socket constants like `AF_INET` & `SOCK_STREAM`|
 | sys/types.h | Used for system datatypes like `socketlen_t` |
 | unistd.h | UNIX standard functions like `read()`, `write()`, `close()`|
+| arpa/inet.h | Used for Internet Operations & address conversions. `inet_addr` converts the IP address string to binary network format. |
 
 
 ## Main Components of TCP Server Program
@@ -72,3 +73,27 @@ if (strncmp("exit", buff, 4) == 0)
 ```
 close(sockfd);
 ```
+
+## Main Components of TCP Client Program
+
+- Socket creation & Server address Configuration: Creates a TCP socket with IPv4 addressing with PORT number set to 8080 <br><br>
+inet_addr() converts string IP to network byte order
+htons() converts port number to network byte order
+```
+sockfd = socket(AF_INET, SOCK_STREAM, 0);
+servaddr.sin_family = AF_INET;
+servaddr.sin_addr.s_addr = inet_addr("127.0.0.1");
+servaddr.sin_port = htons(PORT);
+```
+
+- Connect to the server (Client uses connect() instead of bind(), listen(), accept())
+Initiates a TCP connection to the server & blocks until the connection is established or fails.
+```
+connect(sockfd, (SA*)&servaddr, sizeof(servaddr))
+```
+
+## Output
+
+
+
+
