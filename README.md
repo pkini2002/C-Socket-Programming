@@ -24,3 +24,51 @@ TCP does flow control & requires 3 packets to setup a socket communication befor
 | sys/socket.h | This library contains core socket programming interfaces like `socket()`, `bind()`, `accept()`, `listen()`, Socket constants like `AF_INET` & `SOCK_STREAM`|
 | sys/types.h | Used for system datatypes like `socketlen_t` |
 | unistd.h | UNIX standard functions like `read()`, `write()`, `close()`|
+
+
+## Main Components of TCP Server Program
+
+- Creates a TCP Socket `SOCK_STREAM` and with IPV4 addressing `AF_INET`
+- Configures server address & listens on all available network interfaces (`INADDR_ANY`) and at port 8080
+ ```
+ servaddr.sin_family = AF_INET;
+ servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
+ servaddr.sin_port = htons(PORT);
+
+```
+- Binds the socket to IP address & port
+```
+bind(sockfd, (SA*)&servaddr, sizeof(servaddr))
+```
+- Server starts listening for connections. Queue upto 5 pending connections.
+```
+listen(sockfd, 5)
+```
+- Accepts all incoming client connections & blocks until a client connects. Returns a new socket descriptor for communication
+```
+connfd = accept(sockfd, (SA*)&cli, &len);
+```
+- Reads message from the client into the buffer
+```
+read(connfd, buff, sizeof(buff));
+```
+- Display's the client message
+```
+printf("From client: %s\t To client : ", buff);
+```
+- Reads server response from keyboard
+```
+while ((buff[n++] = getchar()) != '\n');
+```
+- Sends server response back to the client
+```
+write(connfd, buff, sizeof(buff));
+```
+- Exits the chat loop if the server types `exit`
+```
+if (strncmp("exit", buff, 4) == 0)
+```
+- Closes the socket after chat ends
+```
+close(sockfd);
+```
