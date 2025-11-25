@@ -94,6 +94,11 @@ connect(sockfd, (SA*)&servaddr, sizeof(servaddr))
 
 ## Output
 
+<img width="1192" height="501" alt="image" src="https://github.com/user-attachments/assets/212d7af5-b5ef-4f9c-b233-3e0ab3fee408" />
+<br><br>
+<img width="1131" height="318" alt="image" src="https://github.com/user-attachments/assets/4c218b5a-4cd6-4ba2-aebd-107a1e0fce43" />
+
+
 
 
 
